@@ -8,8 +8,6 @@ class Case{
   ScreenPosition pos;
   
   Case(float lon, float lat){
-    //name = n;
-    //date = d;
     latitude = lat;
     longitude = lon;
     location = new Location(lon, lat);
@@ -20,10 +18,4 @@ class Case{
     ellipse(pos.x, pos.y, 2, 2);
     fill(255,0,0);
   }
-  
-  //convert latitude and longitude to x,y coordinates  
-  //float[] to_XY(){
-    //return 
-  //}
-  
 }
