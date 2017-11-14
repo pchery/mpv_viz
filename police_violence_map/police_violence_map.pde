@@ -10,11 +10,12 @@ import de.fhpotsdam.unfolding.marker.*;
 import de.fhpotsdam.unfolding.providers.*;
 import de.fhpotsdam.unfolding.texture.*;
 import de.fhpotsdam.unfolding.tiles.*;
-import de.fhpotsdam.unfolding.ui.*;
+import de.fhpotsdam.unfolding.ui.*; 
 import de.fhpotsdam.unfolding.utils.*;
 import de.fhpotsdam.utils.*;
 UnfoldingMap map;
 
+BarScaleUI barscale;
 JSONArray c; 
 ArrayList<PShape> cities;
 ArrayList<State> states;
@@ -30,6 +31,7 @@ void setup(){
   states = new ArrayList<State>();
   map = new UnfoldingMap(this);
   map.zoomAndPanTo(usaLocation, 4);
+  barscale = new BarScaleUI(this, map, 100, 700);
   MapUtils.createDefaultEventDispatcher(this, map);
   //cities = new ArrayList<PShape>();
   filterButtons = new FilterButton[1];
@@ -41,6 +43,7 @@ void setup(){
 void draw(){
   background(0);
   map.draw();
+  barscale.draw();
   //pushMatrix();
   //translate(-50, -200);
   //scale(3.0);
