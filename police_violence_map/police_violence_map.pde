@@ -20,6 +20,7 @@ ArrayList<PShape> cities;
 ArrayList<State> states;
 ArrayList<PVector> vertices;
 Table table;
+FilterButton[] filterButtons;
 import java.util.*;
 Case[] cases;
 Location usaLocation = new Location(39.50, -98.35);
@@ -31,6 +32,8 @@ void setup(){
   map.zoomAndPanTo(usaLocation, 4);
   MapUtils.createDefaultEventDispatcher(this, map);
   //cities = new ArrayList<PShape>();
+  filterButtons = new FilterButton[1];
+  filterButtons[0] = new FilterButton("Age", 100, 100);
   loadData();
 }
 
@@ -53,6 +56,9 @@ void draw(){
     ScreenPosition pos = map.getScreenPosition(c.location);
     fill(255,0,0);
     ellipse(pos.x, pos.y, 2,2);
+  }
+  for(FilterButton fb: filterButtons){
+    fb.display();
   }
   
   
@@ -94,6 +100,12 @@ void mouseMoved(){
   //for(int i = 0; i<states.size(); i++){
   //  states.get(i).cursorIn(mouseX, mouseY); 
   //}
+}
+void mouseClicked(){
+  for(FilterButton fb: filterButtons){
+    fb.onClicked(mouseX, mouseY);
+  }
+  
 }
 float convertLon(float lon){
     return width*(lon + 175)/120;
