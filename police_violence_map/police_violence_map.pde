@@ -22,9 +22,11 @@ FilterButton[] filterButtons;
 import java.util.*;
 Case[] cases;
 Location usaLocation = new Location(39.50, -98.35);
+float marker_rad = 5;
 
 void setup(){
-  size(800,800,P2D);
+  //size(800,800,P2D);
+  fullScreen(P2D);
   map = new UnfoldingMap(this, new StamenMapProvider.TonerBackground());
   map.zoomAndPanTo(usaLocation, 4);
   barscale = new BarScaleUI(this, map, 100, 700);
@@ -42,8 +44,8 @@ void draw(){
   
   for(Case c:cases){
     ScreenPosition pos = map.getScreenPosition(c.location);
-    fill(255,0,0);
-    ellipse(pos.x, pos.y, 2,2);
+    fill(255,100,100);
+    ellipse(pos.x, pos.y, marker_rad, marker_rad);
   }
   for(FilterButton fb: filterButtons){
     fb.display();
@@ -68,6 +70,9 @@ void mouseMoved(){
 void mouseClicked(){
   for(FilterButton fb: filterButtons){
     fb.onClicked(mouseX, mouseY);
+  }
+  for(Case c : cases){
+    c.onClicked(mouseX, mouseY);
   }
   
 }

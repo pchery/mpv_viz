@@ -13,13 +13,14 @@ class FilterButton {
   
   void display(){
     if(clicked){
-     fill(255,0,0); 
+     fill(122,122,122); 
     }else{
-     fill(0); 
+     fill(255); 
     }
-    float x_pad = 5;
-    rect(x - x_pad, y , textWidth(label) + 2*x_pad, textAscent() + textDescent());
-    fill(255);
+    float x_pad = 10;
+    float y_pad = 3;
+    rect(x - x_pad, y - y_pad, textWidth(label) + 2*x_pad, textAscent() + textDescent() + 2*y_pad);
+    fill(0);
     text(label, x, y + textAscent() );
   }
   
