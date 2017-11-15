@@ -33,6 +33,12 @@ class Axis {
    return this.len; 
   }
   
+  boolean clicked() {
+    return ((mouseX>= this.x_pos && mouseX <= this.x_pos+this.len) && 
+            (mouseY >= this.y_pos-3 && mouseY <= this.y_pos+3) &&
+            !this.sliderButton.clicked());
+  }
+  
   void draw() {
    line(this.x_pos, this.y_pos, this.x_pos+this.len, this.y_pos);
    fill(119,136,153);

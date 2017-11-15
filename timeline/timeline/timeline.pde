@@ -24,8 +24,11 @@ void mouseClicked(){
   if (this.axis.playButton.clicked()) {
     this.axis.playButton.resetPlay();
   }
+  else if (this.axis.clicked()) {
+    this.axis.sliderButton().setXPos(mouseX);
+  }
 }
 
 void mouseReleased(){
-  //this.axis.sliderButton.setClicked(false);
+  this.axis.sliderButton.setClicked(false);
 }
