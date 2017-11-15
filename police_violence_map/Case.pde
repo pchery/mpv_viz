@@ -1,18 +1,24 @@
 class Case{
   
   String name;
-  String date;
   float latitude;
   float longitude;
   Location location;
   ScreenPosition pos;
   boolean clicked = false;
+  Date date;
+  String s_date;
   
-  Case(float lon, float lat){
+  Case(float lon, float lat, String date){
     latitude = lat;
     longitude = lon;
     location = new Location(lon, lat);
-    pos = map.getScreenPosition(location); 
+    pos = map.getScreenPosition(location);
+    s_date = date;
+    try{
+      this.date = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+    } catch(ParseException ex) {}
+    
   }
    
   void display(){

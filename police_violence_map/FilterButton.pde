@@ -17,7 +17,7 @@ class FilterButton {
     }else{
      fill(255); 
     }
-    float x_pad = 10;
+    float x_pad = 15;
     float y_pad = 3;
     rect(x - x_pad, y - y_pad, textWidth(label) + 2*x_pad, textAscent() + textDescent() + 2*y_pad);
     fill(0);

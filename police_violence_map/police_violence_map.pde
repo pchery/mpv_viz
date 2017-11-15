@@ -62,9 +62,12 @@ void draw(){
   }
   
   for(Case c:cases){
-    ScreenPosition pos = map.getScreenPosition(c.location);
-    fill(255,100,100);
-    ellipse(pos.x, pos.y, marker_rad, marker_rad);
+    print(c.s_date);
+    if(axis.getCurrentDate().equals(c.s_date)){
+      ScreenPosition pos = map.getScreenPosition(c.location);
+      fill(255,100,100);
+      ellipse(pos.x, pos.y, marker_rad, marker_rad);
+    }
   }
   for(FilterButton fb: filterButtons){
     fb.display();
@@ -77,7 +80,7 @@ void loadData(){
   cases = new Case[table.getRowCount()];
   for(int i = 0; i < table.getRowCount(); i++){
     TableRow r = table.getRow(i);
-    cases[i] = new Case(r.getFloat("latitude"), r.getFloat("longitude")); 
+    cases[i] = new Case(r.getFloat("latitude"), r.getFloat("longitude"), r.getString("date")); 
   }
   
   
