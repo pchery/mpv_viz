@@ -54,7 +54,7 @@ void draw(){
 
 void loadData(){
   
-  table = loadTable("CleanMPVDataset1.csv", "header");
+  table = loadTable("CleanMPVDataset.csv", "header");
   cases = new Case[table.getRowCount()];
   for(int i = 0; i < table.getRowCount(); i++){
     TableRow r = table.getRow(i);
