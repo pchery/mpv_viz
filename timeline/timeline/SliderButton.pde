@@ -57,5 +57,7 @@ class SliderButton {
   void draw() {
     fill(47,79,79);
     rect(x_pos, y_pos, width_len, height_len);
+    textAlign(CENTER);
+    text(this.axis.getCurrentDate(), x_pos, y_pos+50);
   }
 }
