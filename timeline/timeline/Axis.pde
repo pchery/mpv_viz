@@ -5,6 +5,7 @@ class Axis {
   Calendar calendar = Calendar.getInstance();
   String s_date = "01/01/2013", e_date = "01/01/2018";
   Date start_date, end_date;
+  float day_unit;
   long num_days = 1827;
   PlayButton playButton;
   SliderButton sliderButton;
@@ -18,6 +19,7 @@ class Axis {
    this.x_pos = x_pos;
    this.y_pos = y_pos;
    this.len = len;
+   day_unit = len/this.num_days;
    try {
     this.start_date = new SimpleDateFormat("MM/dd/yyyy").parse(s_date);
     this.end_date = new SimpleDateFormat("MM/dd/yyyy").parse(e_date);
@@ -37,8 +39,7 @@ class Axis {
   
   String getCurrentDate() {
     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-    float day_unit = this.len/1827;
-    int days_num = (int) Math.floor(this.sliderButton().getXPos()/day_unit);
+    int days_num = (int) Math.floor(this.sliderButton().getXPos()/this.day_unit);
     this.calendar.setTimeInMillis(start_date.getTime());
     calendar.add(Calendar.DATE, days_num);
     return sdf.format(calendar.getTime()); 
@@ -54,6 +55,10 @@ class Axis {
   
   float getLen() {
    return this.len; 
+  }
+  
+  float getDayUnit() {
+    return this.day_unit;
   }
   
   boolean clicked() {

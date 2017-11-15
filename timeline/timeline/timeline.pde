@@ -7,6 +7,7 @@ Axis axis;
 
 void setup() {
   size(1200, 1000, P2D);
+  //frameRate(1);
   axis = new Axis(50,height-100,width-100);
 }
 
@@ -14,7 +15,7 @@ void draw() {
   background(255,255,255);
   axis.draw();
   if(axis.playButton().getPlay()) {
-    axis.sliderButton().drag(axis.sliderButton.getXPos()+1);
+    axis.sliderButton().drag(axis.sliderButton.getXPos()+axis.getDayUnit());
   }
 }
 
