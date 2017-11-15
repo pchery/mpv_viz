@@ -6,6 +6,7 @@ class Case{
   float longitude;
   Location location;
   ScreenPosition pos;
+  boolean clicked = false;
   
   Case(float lon, float lat){
     latitude = lat;
@@ -15,7 +16,12 @@ class Case{
   }
    
   void display(){
-    ellipse(pos.x, pos.y, 2, 2);
-    fill(255,0,0);
+  }
+  
+  void onClicked(float x_pos, float y_pos){
+    if((x_pos > pos.x - marker_rad &&  x_pos < pos.x + marker_rad) && (y_pos > pos.y - marker_rad &&  y_pos < pos.y + marker_rad)){
+      clicked = true;
+    }
+    
   }
 }
