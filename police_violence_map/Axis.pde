@@ -3,7 +3,7 @@ class Axis {
   float x_pos, y_pos, len;
   float time_unit, current_time;
   Calendar calendar = Calendar.getInstance();
-  String s_date = "01/01/2013", e_date = "01/01/2018";
+  String s_date = "2013-01-01", e_date = "2018-01-01";
   Date start_date, end_date;
   float day_unit;
   long num_days = 1827;
@@ -12,8 +12,8 @@ class Axis {
   
   Axis(float x_pos, float y_pos, float len) {
    try {
-     start_date = new SimpleDateFormat("MM/dd/yyyy").parse(s_date);
-     end_date = new SimpleDateFormat("MM/dd/yyyy").parse(s_date);
+     start_date = new SimpleDateFormat("yyyy-MM-dd").parse(s_date);
+     end_date = new SimpleDateFormat("yyyy-MM-dd").parse(s_date);
    }
    catch(ParseException ex) {}
    this.x_pos = x_pos;
@@ -21,8 +21,8 @@ class Axis {
    this.len = len;
    day_unit = len/this.num_days;
    try {
-    this.start_date = new SimpleDateFormat("MM/dd/yyyy").parse(s_date);
-    this.end_date = new SimpleDateFormat("MM/dd/yyyy").parse(e_date);
+    this.start_date = new SimpleDateFormat("yyyy-MM-dd").parse(s_date);
+    this.end_date = new SimpleDateFormat("yyyy-MM-dd").parse(e_date);
    }
    catch (ParseException ex) { print("Error converting strings to dates");}
    playButton = new PlayButton(this.x_pos-25, this.y_pos-10, 20);
@@ -38,7 +38,7 @@ class Axis {
   }
   
   String getCurrentDate() {
-    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     int days_num = (int) Math.floor(this.sliderButton().getXPos()/this.day_unit);
     this.calendar.setTimeInMillis(start_date.getTime());
     calendar.add(Calendar.DATE, days_num);
