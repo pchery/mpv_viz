@@ -11,7 +11,7 @@ coord = np.zeros([data.shape[0],2])
 for i in range(0,data.shape[0]):
 #for i in range(0,2):
 #print(data)
-    address ='Powers+Drive+and+West+Colonial+Drive+Orlando+FL'
+    address ='County+Road+1825+Arab+AL+35016'
 # address = np.array_str(data[i]).replace(' ', '+')
     payload = {'address': address, 'key':'AIzaSyAodpHF-GzGs5yh64kkcKSiVgCgsRbBmmU'}
     r = requests.get('https://maps.googleapis.com/maps/api/geocode/json', params=payload)

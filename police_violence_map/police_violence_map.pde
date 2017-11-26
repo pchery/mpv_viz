@@ -35,14 +35,19 @@ EventDispatcher eventDispatcher;
 void setup(){
   //size(800,800,P2D);
   fullScreen(P2D);
+  frameRate(30);
   map = new UnfoldingMap(this, new StamenMapProvider.TonerBackground());
   map.zoomAndPanTo(usaLocation, 4);
   barscale = new BarScaleUI(this, map, 100, 700);
   //MapUtils.createDefaultEventDispatcher(this, map);
-  filterButtons = new FilterButton[1];
-  filterButtons[0] = new FilterButton("Age", 100, 100);
+  filterButtons = new FilterButton[3];
+  filterButtons[0] = new FilterButton("Age", 70, 100);
+  filterButtons[1] = new FilterButton("Race", 70, 150);
+  filterButtons[2] = new FilterButton("Gender", 70, 200);
+  
   loadData();
   axis = new Axis(50,height-100,width-100);
+  
   
   eventDispatcher = new EventDispatcher();
   MouseHandler mouseHandler = new MouseHandler(this, map);
@@ -62,11 +67,10 @@ void draw(){
   }
   
   for(Case c:cases){
-    print(c.s_date);
+    //print(c.s_date);
     if(axis.getCurrentDate().equals(c.s_date)){
       ScreenPosition pos = map.getScreenPosition(c.location);
-      fill(255,100,100);
-      ellipse(pos.x, pos.y, marker_rad, marker_rad);
+      c.display(pos);
     }
   }
   for(FilterButton fb: filterButtons){
@@ -80,7 +84,7 @@ void loadData(){
   cases = new Case[table.getRowCount()];
   for(int i = 0; i < table.getRowCount(); i++){
     TableRow r = table.getRow(i);
-    cases[i] = new Case(r.getFloat("latitude"), r.getFloat("longitude"), r.getString("date")); 
+    cases[i] = new Case(r.getFloat("latitude"), r.getFloat("longitude"), r.getString("name"), r.getString("date"), r.getString("race"), r.getString("age"), r.getString("gender")); 
   }
   
   
@@ -95,6 +99,7 @@ void mouseClicked(){
   }
   for(Case c : cases){
     c.onClicked(mouseX, mouseY);
+    c.popup.onClicked(mouseX, mouseY);
   }
   if (this.axis.playButton.clicked()) {
     this.axis.playButton.resetPlay();
