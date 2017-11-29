@@ -8,14 +8,10 @@ class Axis {
   float day_unit;
   long num_days = 1827;
   PlayButton playButton;
-  SliderButton sliderButton;
+  MaxSliderButton MaxSliderButton;
+  MinSliderButton MinSliderButton;
   
   Axis(float x_pos, float y_pos, float len) {
-   try {
-     start_date = new SimpleDateFormat("yyyy-MM-dd").parse(s_date);
-     end_date = new SimpleDateFormat("yyyy-MM-dd").parse(s_date);
-   }
-   catch(ParseException ex) {}
    this.x_pos = x_pos;
    this.y_pos = y_pos;
    this.len = len;
@@ -26,24 +22,42 @@ class Axis {
    }
    catch (ParseException ex) { print("Error converting strings to dates");}
    playButton = new PlayButton(this.x_pos-25, this.y_pos-10, 20);
-   sliderButton = new SliderButton(this, 8, 20);
+   MinSliderButton = new MinSliderButton(this, 8, 20);
+   MaxSliderButton = new MaxSliderButton(this, 8, 20);
   }
   
   PlayButton playButton() {
     return this.playButton;
   }
   
-  SliderButton sliderButton() {
-    return this.sliderButton;
+  MaxSliderButton MaxSliderButton() {
+    return this.MaxSliderButton;
   }
   
-  String getCurrentDate() {
+  MinSliderButton MinSliderButton() {
+    return this.MinSliderButton;
+  }
+  
+  String formatXPosToDate(float x_pos) {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    int days_num = (int) Math.floor(this.sliderButton().getXPos()/this.day_unit);
+    int days_num = (int) Math.floor(x_pos/this.day_unit);
     this.calendar.setTimeInMillis(start_date.getTime());
     calendar.add(Calendar.DATE, days_num);
-    return sdf.format(calendar.getTime()); 
+    return sdf.format(calendar.getTime());
   }
+  
+  boolean displayCase(Case c) {
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    long case_date = 0;
+    long current_date = 0;
+    try {
+    case_date = sdf.parse(c.s_date).getTime();
+    current_date = sdf.parse(formatXPosToDate(this.MinSliderButton().getXPos())).getTime();
+    }
+    catch (ParseException ex) { print("Error converting strings to dates");}
+    return case_date <= current_date;
+  }
+  
   
   float getXPos() {
    return this.x_pos; 
@@ -64,7 +78,7 @@ class Axis {
   boolean clicked() {
     return ((mouseX>= this.x_pos && mouseX <= this.x_pos+this.len) && 
             (mouseY >= this.y_pos-3 && mouseY <= this.y_pos+3) &&
-            !this.sliderButton.clicked());
+            !this.MaxSliderButton.clicked());
   }
   
   void draw() {
@@ -75,7 +89,8 @@ class Axis {
    line(this.x_pos, this.y_pos, this.x_pos+this.len, this.y_pos);
    fill(119,136,153);
    this.playButton.draw();
-   this.sliderButton.draw();
+   this.MaxSliderButton.draw();
+   this.MinSliderButton.draw();
    
   }
 }

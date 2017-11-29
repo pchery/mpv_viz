@@ -1,4 +1,4 @@
-class SliderButton {
+class MaxSliderButton {
   
   float x_pos, y_pos, width_len, height_len;
   float MAX_X_POS;
@@ -7,9 +7,9 @@ class SliderButton {
   boolean clicked;
   Axis axis;
   
-  SliderButton(Axis axis, float width_len, float height_len) {
+  MaxSliderButton(Axis axis, float width_len, float height_len) {
     this.axis = axis;
-    this.x_pos = axis.getXPos();
+    this.x_pos = axis.getXPos()+axis.getLen();
     this.MAX_X_POS = axis.getXPos() + axis.getLen();
     this.MIN_X_POS = axis.getXPos();
     this.y_pos = axis.getYPos()-10;
@@ -40,11 +40,11 @@ class SliderButton {
   }
   
   void drag(float x_pos) {
-    if(x_pos>= this.MIN_X_POS && x_pos<=this.MAX_X_POS) {
+    if(x_pos >= this.axis.MinSliderButton().getXPos()+20 && x_pos<=this.MAX_X_POS) {
       this.x_pos = x_pos;
     }
-    else if (x_pos < this.MIN_X_POS) {
-      this.x_pos = this.MIN_X_POS;
+    else if(x_pos <= this.axis.MinSliderButton().getXPos()+20) {
+      this.x_pos = this.axis.MinSliderButton().getXPos()+20;
     }
     else {
       this.x_pos = this.MAX_X_POS;
@@ -59,6 +59,6 @@ class SliderButton {
     rect(x_pos, y_pos, width_len, height_len);
     textAlign(CENTER);
     fill(255);
-    text(this.axis.getCurrentDate(), x_pos, y_pos+50);
+    text(this.axis.formatXPosToDate(x_pos), x_pos, y_pos+50);
   }
 }
