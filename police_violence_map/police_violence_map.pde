@@ -38,6 +38,8 @@ void setup(){
   frameRate(30);
   map = new UnfoldingMap(this, new StamenMapProvider.TonerBackground());
   map.zoomAndPanTo(usaLocation, 4);
+  map.setZoomRange(4, 15);
+  map.setTweening(true);
   barscale = new BarScaleUI(this, map, 100, 700);
   //MapUtils.createDefaultEventDispatcher(this, map);
   filterButtons = new FilterButton[3];
