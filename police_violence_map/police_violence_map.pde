@@ -23,7 +23,6 @@ Axis axis;
 
 BarScaleUI barscale;
 JSONArray c; 
-Table table;
 FilterButton[] filterButtons;
 import java.util.*;
 Case[] cases;
@@ -31,6 +30,8 @@ Location usaLocation = new Location(39.50, -98.35);
 float marker_rad = 10;
 Case popup_displayed; 
 FilterButton selected_fb;
+Table colormap; 
+Table table;
 
 EventDispatcher eventDispatcher;
 
@@ -38,19 +39,19 @@ void setup(){
   size(800,700,P2D);
   //fullScreen(P2D);
   frameRate(30);
+  
   popup_displayed = null;
   selected_fb = null;
   map = new UnfoldingMap(this, new StamenMapProvider.TonerBackground());
   map.zoomAndPanTo(usaLocation, 4);
   map.setZoomRange(4, 15);
   map.setTweening(true);
+  loadData();
   barscale = new BarScaleUI(this, map, 100, 700);
   filterButtons = new FilterButton[2];
   //filterButtons[0] = new FilterButton("Age", 70, 100);
   filterButtons[0] = new FilterButton("Race", 25, 150);
   filterButtons[1] = new FilterButton("Gender", 25, 180);
-  
-  loadData();
   axis = new Axis(50,height-50,width-100);
   
   
@@ -101,7 +102,8 @@ void draw(){
 }
 
 void loadData(){
-  
+  colormap = loadTable("attributes.csv");
+  print(colormap.findRows("Gender", 0));
   table = loadTable("CleanMPVDataset.csv", "header");
   cases = new Case[table.getRowCount()];
   for(int i = 0; i < table.getRowCount(); i++){

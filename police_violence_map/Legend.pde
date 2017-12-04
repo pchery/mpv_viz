@@ -2,25 +2,32 @@ class Legend{
   int num_attrib;
   int rect_width = 50;
   int rect_height = 25;
-  int x_pad = 5;
+  int x_pad = 15;
   int y_pad = 5;
   String name;
+  Table colormap;
 
-  Legend(String name , int num_attrib){
-    this.num_attrib = num_attrib;
+  Legend(String name , Iterable<TableRow> tr){
     this.name = name;
+    this.colormap = new Table(tr);
+    this.num_attrib = colormap.getRowCount();
+    //print(colormap.findRows("Gender", 0));
   }
   
   void display(){
     fill(255);
-    rect(width - 25 - (rect_width + 2*x_pad)*num_attrib + x_pad, height - 125, (rect_width + 2*x_pad) * num_attrib, rect_height + 2*y_pad + textAscent() + textDescent()); 
+    rect(width - 25 - (rect_width + x_pad)*num_attrib - x_pad, height - 125, (rect_width + x_pad) * num_attrib + x_pad, rect_height + 2*y_pad + textAscent() + textDescent()); 
     
-    for(int i = num_attrib; i > 0; i--){
+    int i = num_attrib;
+    for(TableRow tr : colormap.rows()){
       rect(width - 25 - (rect_width + x_pad)*i, height - 125 + y_pad, rect_width, rect_height);
       fill(0);
       textAlign(CENTER);
-      text("hello", width - 25 - (rect_width + x_pad)*i + rect_width/2, height - 125 + y_pad + rect_height + textAscent() + textDescent());
-      fill(255);
+      textSize(9);
+      text(tr.getString(1), width - 25 - (rect_width + x_pad)*i + rect_width/2, height - 125 + y_pad + rect_height + textAscent() + textDescent());
+      fill(color(unhex(tr.getString(2))));
+      textSize(10);
+      i--;
     }
     
     

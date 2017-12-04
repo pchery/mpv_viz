@@ -35,8 +35,8 @@ class FilterButton {
     
     colormaps.put("Gender", genderCM);
     colormaps.put("Race", raceCM);
-    
-    legend = new Legend(label, 3);
+    print(colormap.findRows(label,0));
+    legend = new Legend(label, colormap.findRows(label,0));
   }
   
   void display(){
