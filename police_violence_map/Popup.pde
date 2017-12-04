@@ -42,8 +42,7 @@ class Popup{
     if(x > c.pos.x + rect_w/2 - 15 && x < c.pos.x + rect_w/2 && y > c.pos.y - rect_h/2 && y < c.pos.y - rect_h/2 + 15){
       exit_clicked = !exit_clicked; 
       c.clicked = false;
-    }
-    
+    }   
   }
   
   

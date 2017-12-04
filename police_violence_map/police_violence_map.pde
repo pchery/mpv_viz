@@ -28,27 +28,30 @@ FilterButton[] filterButtons;
 import java.util.*;
 Case[] cases;
 Location usaLocation = new Location(39.50, -98.35);
-float marker_rad = 5;
+float marker_rad = 10;
+Case popup_displayed; 
+FilterButton selected_fb;
 
 EventDispatcher eventDispatcher;
 
 void setup(){
-  //size(800,800,P2D);
-  fullScreen(P2D);
+  size(800,700,P2D);
+  //fullScreen(P2D);
   frameRate(30);
+  popup_displayed = null;
+  selected_fb = null;
   map = new UnfoldingMap(this, new StamenMapProvider.TonerBackground());
   map.zoomAndPanTo(usaLocation, 4);
   map.setZoomRange(4, 15);
   map.setTweening(true);
   barscale = new BarScaleUI(this, map, 100, 700);
-  //MapUtils.createDefaultEventDispatcher(this, map);
-  filterButtons = new FilterButton[3];
-  filterButtons[0] = new FilterButton("Age", 70, 100);
-  filterButtons[1] = new FilterButton("Race", 70, 150);
-  filterButtons[2] = new FilterButton("Gender", 70, 200);
+  filterButtons = new FilterButton[2];
+  //filterButtons[0] = new FilterButton("Age", 70, 100);
+  filterButtons[0] = new FilterButton("Race", 25, 150);
+  filterButtons[1] = new FilterButton("Gender", 25, 180);
   
   loadData();
-  axis = new Axis(50,height-100,width-100);
+  axis = new Axis(50,height-50,width-100);
   
   
   eventDispatcher = new EventDispatcher();
@@ -62,21 +65,38 @@ void setup(){
 void draw(){
   background(0);
   map.draw();
+ for(Case c:cases){
+  if(axis.displayCase(c)){
+    ScreenPosition pos = map.getScreenPosition(c.location);
+    if(selected_fb != null){
+      c.filterValue = selected_fb.label;
+    }else{
+      c.filterValue = "";
+    }
+    c.displayed = true; 
+    c.display(pos);
+  }else{
+   c.displayed = false; 
+  }
+}
+  
   barscale.draw();
   axis.draw();
   if(axis.playButton().getPlay()) {
     axis.MinSliderButton().drag(axis.MinSliderButton.getXPos()+axis.getDayUnit());
   }
-  
-  for(Case c:cases){
-    //print(c.s_date);
-    if(axis.displayCase(c)){
-      ScreenPosition pos = map.getScreenPosition(c.location);
-      c.display(pos);
-    }
-  }
+ 
   for(FilterButton fb: filterButtons){
     fb.display();
+  }
+  if(selected_fb != null){
+    selected_fb.display();
+  }
+  if(popup_displayed != null){
+    popup_displayed.popup.display();
+    if(!popup_displayed.clicked){
+      popup_displayed = null;
+    } 
   }
 }
 
@@ -86,7 +106,7 @@ void loadData(){
   cases = new Case[table.getRowCount()];
   for(int i = 0; i < table.getRowCount(); i++){
     TableRow r = table.getRow(i);
-    cases[i] = new Case(r.getFloat("latitude"), r.getFloat("longitude"), r.getString("name"), r.getString("date"), r.getString("race"), r.getString("age"), r.getString("gender")); 
+    cases[i] = new Case(r.getFloat("latitude"), r.getFloat("longitude"), r.getString("name"), r.getString("date"), r.getString("race"), r.getString("age"), r.getString("gender"),r.getString("state")); 
   }
   
   
@@ -97,11 +117,19 @@ void mouseMoved(){
 }
 void mouseClicked(){
   for(FilterButton fb: filterButtons){
-    fb.onClicked(mouseX, mouseY);
+    if(selected_fb == null && fb.onClicked(mouseX, mouseY)){
+      selected_fb = fb;
+    }else if(selected_fb != null && !fb.onClicked(mouseX, mouseY) && fb.equals(selected_fb)){
+      selected_fb = null;
+    }
   }
-  for(Case c : cases){
-    c.onClicked(mouseX, mouseY);
-    c.popup.onClicked(mouseX, mouseY);
+  for(Case ca : cases){
+    if(ca.displayed){
+      ca.popup.onClicked(mouseX, mouseY);
+      if(popup_displayed == null && ca.onClicked(mouseX, mouseY)){
+        popup_displayed = ca;
+      }
+    }
   }
   if (this.axis.playButton.clicked()) {
     this.axis.playButton.resetPlay();
@@ -112,6 +140,8 @@ void mouseClicked(){
   else if (this.axis.clicked()) {
     this.axis.MinSliderButton().setXPos(mouseX);
   }
+  
+  
 }
 
 void mouseDragged(){
@@ -126,7 +156,8 @@ void mouseDragged(){
 }
 
 void mouseReleased(){
-  if (this.axis.playButton.clicked() || this.axis.clicked() || this.axis.MaxSliderButton.clicked() || this.axis.MaxSliderButton.getClicked()) {
+  if (this.axis.playButton.clicked() || this.axis.clicked() ||
+      this.axis.MinSliderButton.clicked() || this.axis.MinSliderButton.getClicked()|| this.axis.MaxSliderButton.clicked() || this.axis.MaxSliderButton.getClicked()) {
      listen(); 
   }
   this.axis.MaxSliderButton.setClicked(false);
