@@ -1,6 +1,6 @@
 class FilterButton {
   
-  boolean clicked = false;
+  boolean highlighted;
   float x;
   float y;
   String label;
@@ -37,10 +37,11 @@ class FilterButton {
     colormaps.put("Race", raceCM);
     print(colormap.findRows(label,0));
     legend = new Legend(label, colormap.findRows(label,0));
+    highlighted = false;
   }
   
   void display(){
-    if(clicked){
+    if(highlighted){
      legend.display();
      fill(122,122,122); 
     }else{
@@ -55,10 +56,9 @@ class FilterButton {
   
   boolean onClicked(float pos_x, float pos_y){
     if((pos_x > x && pos_x < x + 50) && (pos_y > y && pos_y < y + 20)){
-      clicked = !clicked;
+     return true;
     }
-    
-    return clicked;
+    return false;
   }
   
   

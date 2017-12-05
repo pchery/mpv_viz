@@ -121,8 +121,16 @@ void mouseClicked(){
   for(FilterButton fb: filterButtons){
     if(selected_fb == null && fb.onClicked(mouseX, mouseY)){
       selected_fb = fb;
-    }else if(selected_fb != null && !fb.onClicked(mouseX, mouseY) && fb.equals(selected_fb)){
+      fb.highlighted = true;
+    }
+    else if(selected_fb != null && fb.onClicked(mouseX, mouseY) && fb.equals(selected_fb)){
+      selected_fb.highlighted = false;
       selected_fb = null;
+    }
+    else if(selected_fb != null && fb.onClicked(mouseX, mouseY) && !fb.equals(selected_fb)){
+      selected_fb.highlighted = false;
+      selected_fb = fb;
+      selected_fb.highlighted = true;
     }
   }
   for(Case ca : cases){
