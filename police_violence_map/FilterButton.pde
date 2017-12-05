@@ -6,36 +6,11 @@ class FilterButton {
   String label;
   Legend legend; 
   
-  Map<String, Map> colormaps = new HashMap<String, Map>();
-  Map<String, String> genderCM = new HashMap<String, String>(); 
-  Map<String, String> ageCM = new HashMap<String, String>();
-  Map<String, String> raceCM = new HashMap<String, String>();
-  
-  //filter button should have a colormap object
-   //filter button tells cases and legend which colors to use
-  //filter button has a legend 
-  
   FilterButton(String label, float x, float y){
     this.label = label;
     this.x = x;
     this.y = y;
     
-    genderCM.put("Male","FF0000FF");
-    genderCM.put("Female","FFFF0000");
-    genderCM.put("NA","FFFF0000");
-    genderCM.put("Transgender","FFFF0000");
-    genderCM.put("Unknown","FFFF0000");
-    raceCM.put("Black", "ff123456");
-    raceCM.put("White", "ff654321");
-    raceCM.put("Hispanic", "ffffff");
-    raceCM.put("Native American", "ffffff");
-    raceCM.put("Unknown race", "ffffff");
-    raceCM.put("Pacific Islander", "ffffff");
-    raceCM.put("Asian", "ffffff");
-    
-    colormaps.put("Gender", genderCM);
-    colormaps.put("Race", raceCM);
-    print(colormap.findRows(label,0));
     legend = new Legend(label, colormap.findRows(label,0));
     highlighted = false;
   }

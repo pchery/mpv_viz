@@ -42,7 +42,17 @@ void setup(){
   
   popup_displayed = null;
   selected_fb = null;
-  map = new UnfoldingMap(this, new StamenMapProvider.TonerBackground());
+  //map = new UnfoldingMap(this, new StamenMapProvider.TonerBackground());
+  //map = new UnfoldingMap(this, new Microsoft.HybridProvider() );
+  //map = new UnfoldingMap(this, new Google.GoogleTerrainProvider() );
+  //map = new UnfoldingMap(this, new Google.GoogleSimplifiedProvider() );
+  //map = new UnfoldingMap(this, new GeoMapApp.TopologicalGeoMapProvider() );
+  //map = new UnfoldingMap(this, new EsriProvider.WorldStreetMap() );
+  //map = new UnfoldingMap(this, new EsriProvider.WorldGrayCanvas() ); I really like this one, except there are no city names
+  //map = new UnfoldingMap(this, new EsriProvider.NatGeoWorldMap() );
+  //map = new UnfoldingMap(this, new OpenStreetMap.OSMGrayProvider() );
+  map = new UnfoldingMap(this, new StamenMapProvider.TonerLite() ); //I really like this one
+  
   map.zoomAndPanTo(usaLocation, 4);
   map.setZoomRange(4, 15);
   map.setTweening(true);
