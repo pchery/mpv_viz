@@ -17,11 +17,12 @@ class Case{
   Popup popup;
   Map<String, String> attrib = new HashMap<String,String>();
   String filterValue;
-  
-
+  int wave_rad;
+  boolean wave_on;
   Case(float lon, float lat, String name, String date, String race, String age, String gender, String state){
   
-    
+    wave_rad = 0;
+    wave_on = true;
     clicked = false;    
     displayed = false;
     
@@ -49,6 +50,10 @@ class Case{
   }
    
   void display(ScreenPosition pos){
+    if(wave_rad > 50){
+       wave_rad = 0;
+       wave_on = false;
+    }
     this.pos = pos;
     float rect_w = 200;
     float rect_h = 150;
@@ -62,7 +67,11 @@ class Case{
 
       ellipse(pos.x, pos.y, marker_rad, marker_rad);
     }
-
+    fill(255,0);
+    ellipse(pos.x, pos.y, wave_rad, wave_rad);
+    if(wave_on){
+      wave_rad += 2;
+    }
   }
   
   boolean onClicked(float x_pos, float y_pos){
