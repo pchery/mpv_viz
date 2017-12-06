@@ -1,5 +1,5 @@
 class FilterButton {
-  
+  float w = 100; 
   boolean highlighted;
   float x;
   float y;
@@ -24,9 +24,9 @@ class FilterButton {
     }
     float x_pad = 15;
     float y_pad = 3;
-    rect(x - x_pad, y - y_pad, textWidth(label) + 2*x_pad, textAscent() + textDescent() + 2*y_pad);
+    rect(x - x_pad, y - y_pad, w, textAscent() + textDescent() + 2*y_pad);
     fill(0);
-    text(label, x + (textWidth(label))/2, y + textAscent());
+    text(label, x - x_pad + w/2, y + textAscent());
   }
   
   boolean onClicked(float pos_x, float pos_y){

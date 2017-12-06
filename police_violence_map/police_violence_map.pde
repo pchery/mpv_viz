@@ -27,7 +27,7 @@ FilterButton[] filterButtons;
 import java.util.*;
 Case[] cases;
 Location usaLocation = new Location(39.50, -98.35);
-float marker_rad = 10;
+int marker_rad = 10;
 Case popup_displayed; 
 FilterButton selected_fb;
 Table colormap; 
@@ -58,10 +58,10 @@ void setup(){
   map.setTweening(true);
   loadData();
   barscale = new BarScaleUI(this, map, 100, 700);
-  filterButtons = new FilterButton[2];
-  //filterButtons[0] = new FilterButton("Age", 70, 100);
-  filterButtons[0] = new FilterButton("Race", 25, 150);
-  filterButtons[1] = new FilterButton("Gender", 25, 180);
+  filterButtons = new FilterButton[3];
+  filterButtons[2] = new FilterButton("Age", 25, 10);
+  filterButtons[0] = new FilterButton("Race", 150, 10);
+  filterButtons[1] = new FilterButton("Gender", 275, 10);
   axis = new Axis(50,height-50,width-100);
   
   
