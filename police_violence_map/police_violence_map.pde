@@ -155,9 +155,6 @@ void mouseClicked(){
     this.axis.playButton.resetPlay();
   }
   else if (this.axis.clicked()) {
-    this.axis.MaxSliderButton().setXPos(mouseX);
-  }
-  else if (this.axis.clicked()) {
     this.axis.MinSliderButton().setXPos(mouseX);
   }
   
@@ -165,11 +162,7 @@ void mouseClicked(){
 }
 
 void mouseDragged(){
-  if (this.axis.MaxSliderButton.clicked() || this.axis.MaxSliderButton.getClicked()) {
-    this.axis.MaxSliderButton.setClicked(true);
-    this.axis.MaxSliderButton.drag(mouseX);
-  }
-  else if (this.axis.MinSliderButton.clicked() || this.axis.MinSliderButton.getClicked()) {
+  if (this.axis.MinSliderButton.clicked() || this.axis.MinSliderButton.getClicked()) {
     this.axis.MinSliderButton.setClicked(true);
     this.axis.MinSliderButton.drag(mouseX);
   }
@@ -177,10 +170,9 @@ void mouseDragged(){
 
 void mouseReleased(){
   if (this.axis.playButton.clicked() || this.axis.clicked() ||
-      this.axis.MinSliderButton.clicked() || this.axis.MinSliderButton.getClicked()|| this.axis.MaxSliderButton.clicked() || this.axis.MaxSliderButton.getClicked()) {
+      this.axis.MinSliderButton.clicked() || this.axis.MinSliderButton.getClicked()) {
      listen(); 
   }
-  this.axis.MaxSliderButton.setClicked(false);
   this.axis.MinSliderButton.setClicked(false);
 }
 
@@ -196,7 +188,6 @@ void mute() {
 
 public void mousePressed() {
   if (this.axis.playButton.clicked() || this.axis.clicked() || 
-      this.axis.MaxSliderButton.clicked() || this.axis.MaxSliderButton.getClicked() ||
       this.axis.MinSliderButton.clicked() || this.axis.MinSliderButton.getClicked()) {
     mute(); 
    }

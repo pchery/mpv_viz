@@ -8,7 +8,6 @@ class Axis {
   float day_unit;
   long num_days = 1827;
   PlayButton playButton;
-  MaxSliderButton MaxSliderButton;
   MinSliderButton MinSliderButton;
   
   Axis(float x_pos, float y_pos, float len) {
@@ -23,16 +22,12 @@ class Axis {
    catch (ParseException ex) { print("Error converting strings to dates");}
    playButton = new PlayButton(this.x_pos-25, this.y_pos-10, 20);
    MinSliderButton = new MinSliderButton(this, 8, 20);
-   MaxSliderButton = new MaxSliderButton(this, 8, 20);
   }
   
   PlayButton playButton() {
     return this.playButton;
   }
   
-  MaxSliderButton MaxSliderButton() {
-    return this.MaxSliderButton;
-  }
   
   MinSliderButton MinSliderButton() {
     return this.MinSliderButton;
@@ -77,8 +72,7 @@ class Axis {
   
   boolean clicked() {
     return ((mouseX>= this.x_pos && mouseX <= this.x_pos+this.len) && 
-            (mouseY >= this.y_pos-3 && mouseY <= this.y_pos+3) &&
-            !this.MaxSliderButton.clicked());
+            (mouseY >= this.y_pos-3 && mouseY <= this.y_pos+3));
   }
   
   void draw() {
@@ -89,7 +83,6 @@ class Axis {
    line(this.x_pos, this.y_pos, this.x_pos+this.len, this.y_pos);
    fill(119,136,153);
    this.playButton.draw();
-   this.MaxSliderButton.draw();
    this.MinSliderButton.draw();
    
   }

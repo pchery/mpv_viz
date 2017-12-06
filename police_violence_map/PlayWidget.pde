@@ -1,4 +1,4 @@
-class MaxSliderButton {
+class PlayWidget {
   
   float x_pos, y_pos, width_len, height_len;
   float MAX_X_POS;
@@ -7,7 +7,7 @@ class MaxSliderButton {
   boolean clicked;
   Axis axis;
   
-  MaxSliderButton(Axis axis, float width_len, float height_len) {
+  PlayWidget(Axis axis, float width_len, float height_len) {
     this.axis = axis;
     this.x_pos = axis.getXPos()+axis.getLen();
     this.MAX_X_POS = axis.getXPos() + axis.getLen();
