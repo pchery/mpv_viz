@@ -3,6 +3,8 @@ class FilterButton {
   boolean highlighted;
   float x;
   float y;
+  float x_pad = 15;
+  float y_pad = 3;
   String label;
   Legend legend; 
   
@@ -22,15 +24,14 @@ class FilterButton {
     }else{
      fill(255); 
     }
-    float x_pad = 15;
-    float y_pad = 3;
+    
     rect(x - x_pad, y - y_pad, w, textAscent() + textDescent() + 2*y_pad);
     fill(0);
     text(label, x - x_pad + w/2, y + textAscent());
   }
   
   boolean onClicked(float pos_x, float pos_y){
-    if((pos_x > x && pos_x < x + 50) && (pos_y > y && pos_y < y + 20)){
+    if((pos_x > x - x_pad && pos_x < x + w - x_pad) && (pos_y > y - y_pad && pos_y < y + 20 - y_pad)){
      return true;
     }
     return false;
