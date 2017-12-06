@@ -58,7 +58,7 @@ class MinSliderButton {
     fill(47,79,79);
     rect(x_pos, y_pos, width_len, height_len);
     textAlign(CENTER);
-    fill(255);
+    fill(0);
     text(this.axis.formatXPosToDate(x_pos), x_pos, y_pos+50);
   }
 }

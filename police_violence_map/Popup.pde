@@ -32,10 +32,6 @@ class Popup{
       
        fill(255);
        rect(c.pos.x + rect_w/2 - 15, c.pos.y - rect_h/2, 15,15);
-     //}
-     
-     
-     //rectMode(CORNER);
   }
   
   void onClicked(float x, float y){
