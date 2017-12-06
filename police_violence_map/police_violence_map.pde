@@ -32,6 +32,7 @@ Case popup_displayed;
 FilterButton selected_fb;
 Table colormap; 
 Table table;
+ZoomWidget zoom;
 
 EventDispatcher eventDispatcher;
 
@@ -63,12 +64,15 @@ void setup(){
   filterButtons[0] = new FilterButton("Race", 100, 10);
   filterButtons[1] = new FilterButton("Gender", 175, 10);
   axis = new Axis(50,height-50,width-100);
-  
+  zoom = new ZoomWidget(width - 40, height - 150);
   eventDispatcher = new EventDispatcher();
   MouseHandler mouseHandler = new MouseHandler(this, map);
   eventDispatcher.addBroadcaster(mouseHandler);
-  listen();
-  
+  eventDispatcher.register(map, PanMapEvent.PAN_UP, map.getId());
+  eventDispatcher.unregister(map, ZoomMapEvent.TYPE_ZOOM, map.getId());
+  //eventDispatcher.unregister(map, PanMapEvent.PAN_BY, map.getId());
+ // eventDispatcher.register(map, ZoomMapEvent.TYPE_ZOOM, map.getId());
+ 
 }
 
 
@@ -100,6 +104,7 @@ void draw(){
   for(FilterButton fb: filterButtons){
     fb.display();
   }
+  zoom.display();
   if(selected_fb != null){
     selected_fb.display();
   }
@@ -128,7 +133,14 @@ void loadData(){
 void mouseMoved(){
  
 }
-void mouseClicked(){
+void mouseClicked(MouseEvent evt){
+  
+  if(zoom.plusClicked()){
+    map.zoomAndPanTo(width/2, height/2, map.getZoomLevel() + 1);
+  }else if(zoom.minusClicked()){
+     map.zoomAndPanTo(width/2, height/2, map.getZoomLevel() - 1);
+  }
+ 
   for(FilterButton fb: filterButtons){
     if(selected_fb == null && fb.onClicked(mouseX, mouseY)){
       selected_fb = fb;
@@ -162,7 +174,6 @@ void mouseClicked(){
     this.axis.MinSliderButton().setXPos(mouseX);
   }
   
-  
 }
 
 void mouseDragged(){
@@ -177,28 +188,30 @@ void mouseDragged(){
 }
 
 void mouseReleased(){
-  if (this.axis.playButton.clicked() || this.axis.clicked() ||
+  if (this.filterButtons[0].onClicked(mouseX, mouseY) || this.filterButtons[1].onClicked(mouseX, mouseY) || this.filterButtons[2].onClicked(mouseX, mouseY) ||this.axis.playButton.clicked() || this.axis.clicked() ||
       this.axis.MinSliderButton.clicked() || this.axis.MinSliderButton.getClicked()|| this.axis.MaxSliderButton.clicked() || this.axis.MaxSliderButton.getClicked()) {
-     listen(); 
+     //listen(); 
   }
   this.axis.MaxSliderButton.setClicked(false);
   this.axis.MinSliderButton.setClicked(false);
 }
 
-void listen() {
-  eventDispatcher.register(map, PanMapEvent.TYPE_PAN, map.getId());
-  eventDispatcher.register(map, ZoomMapEvent.TYPE_ZOOM, map.getId());
-}
+//void zoomListen() {
+//  eventDispatcher.register(map, ZoomMapEvent.TYPE_ZOOM, map.getId());
+//}
 
-void mute() {
-    eventDispatcher.unregister(map, PanMapEvent.TYPE_PAN, map.getId());
-    eventDispatcher.unregister(map, ZoomMapEvent.TYPE_ZOOM, map.getId());
-}
+//void zoommute() {
+//    eventDispatcher.unregister(map, ZoomMapEvent.TYPE_ZOOM, map.getId());
+//}
 
 public void mousePressed() {
-  if (this.axis.playButton.clicked() || this.axis.clicked() || 
+  if (this.filterButtons[0].onClicked(mouseX, mouseY) || this.filterButtons[1].onClicked(mouseX, mouseY) || this.filterButtons[2].onClicked(mouseX, mouseY) || this.axis.playButton.clicked() || this.axis.clicked() || 
       this.axis.MaxSliderButton.clicked() || this.axis.MaxSliderButton.getClicked() ||
       this.axis.MinSliderButton.clicked() || this.axis.MinSliderButton.getClicked()) {
-    mute(); 
+    //mute(); 
    }
+}
+
+public void mouseWheel(){
+  eventDispatcher.register(map, ZoomMapEvent.TYPE_ZOOM, map.getId());
 }
