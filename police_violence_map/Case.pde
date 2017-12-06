@@ -39,8 +39,8 @@ class Case{
     this.age = age;
     this.gender = gender;
     this.popup = new Popup(this);
-    latitude = lat;
-    longitude = lon;
+    this.latitude = lat;
+    this.longitude = lon;
     location = new Location(lon, lat);
     pos = map.getScreenPosition(location);
     s_date = date;
@@ -55,6 +55,8 @@ class Case{
        wave_rad = 0;
        wave_on = false;
     }
+    
+    
     this.pos = pos;
     float rect_w = 200;
     float rect_h = 150;
@@ -76,13 +78,12 @@ class Case{
       }else{
         fill(100,100,100);
       }
-
       ellipse(pos.x, pos.y, marker_rad, marker_rad);
     }
     fill(255,0);
     ellipse(pos.x, pos.y, wave_rad, wave_rad);
-    if(wave_on){
-      wave_rad += 1;
+    if(wave_on && axis.playButton().play){
+      wave_rad += 4;
     }
   }
   

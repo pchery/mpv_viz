@@ -8,7 +8,8 @@ class Axis {
   float day_unit;
   long num_days = 1827;
   PlayButton playButton;
-  MinSliderButton MinSliderButton;
+  MinSliderButton minSliderButton;
+  PlayWidget playWidget;
   
   Axis(float x_pos, float y_pos, float len) {
    this.x_pos = x_pos;
@@ -21,7 +22,8 @@ class Axis {
    }
    catch (ParseException ex) { print("Error converting strings to dates");}
    playButton = new PlayButton(this.x_pos-25, this.y_pos-10, 20);
-   MinSliderButton = new MinSliderButton(this, 8, 20);
+   minSliderButton = new MinSliderButton(this, 8, 20);
+   playWidget = new PlayWidget(this, 10);
   }
   
   PlayButton playButton() {
@@ -30,7 +32,11 @@ class Axis {
   
   
   MinSliderButton MinSliderButton() {
-    return this.MinSliderButton;
+    return this.minSliderButton;
+  }
+  
+  PlayWidget playWidget() {
+    return this.playWidget;
   }
   
   String formatXPosToDate(float x_pos) {
@@ -42,17 +48,29 @@ class Axis {
   }
   
   boolean displayCase(Case c) {
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    long case_date = 0;
-    long current_date = 0;
-    try {
-    case_date = sdf.parse(c.s_date).getTime();
-    current_date = sdf.parse(formatXPosToDate(this.MinSliderButton().getXPos())).getTime();
+    if (this.playWidget.display) {
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+      long case_date = 0;
+      long current_date = 0;
+      long min_date = 0;
+      try {
+      case_date = sdf.parse(c.s_date).getTime();
+      current_date = sdf.parse(formatXPosToDate(this.playWidget.getXPos())).getTime();
+      min_date = sdf.parse(formatXPosToDate(this.minSliderButton.getXPos())).getTime();
+      }
+      catch (ParseException ex) { print("Error converting strings to dates");}
+      return case_date >= min_date && case_date <= current_date;
     }
-    catch (ParseException ex) { print("Error converting strings to dates");}
-    return case_date <= current_date;
+    else {
+      String current_date = formatXPosToDate(this.minSliderButton.getXPos());
+      return c.s_date.equals(current_date) && !Float.isNaN(c.latitude) && !Float.isNaN(c.latitude);
+    }
   }
   
+  void resetCaseWaving() {
+    for (Case c : cases)
+      c.wave_on = true;
+  }
   
   float getXPos() {
    return this.x_pos; 
@@ -83,7 +101,8 @@ class Axis {
    line(this.x_pos, this.y_pos, this.x_pos+this.len, this.y_pos);
    fill(119,136,153);
    this.playButton.draw();
-   this.MinSliderButton.draw();
+   this.minSliderButton.draw();
+   this.playWidget.draw();
    
   }
 }

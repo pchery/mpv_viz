@@ -38,7 +38,6 @@ EventDispatcher eventDispatcher;
 void setup(){
   size(800,700,P2D);
   //fullScreen(P2D);
-  frameRate(30);
   
   popup_displayed = null;
   selected_fb = null;
@@ -76,25 +75,28 @@ void setup(){
 void draw(){
   background(0);
   map.draw();
- for(Case c:cases){
-  if(axis.displayCase(c)){
-    ScreenPosition pos = map.getScreenPosition(c.location);
-    if(selected_fb != null){
-      c.filterValue = selected_fb.label;
-    }else{
-      c.filterValue = "";
+  int cases_displayed = 0;
+  for(Case c:cases){
+    if(axis.displayCase(c)) {
+      cases_displayed++;
+      ScreenPosition pos = map.getScreenPosition(c.location);
+      if(selected_fb != null){
+        c.filterValue = selected_fb.label;
+      }
+      else {
+        c.filterValue = "";
+      }
+      c.displayed = true; 
+      c.display(pos);
     }
-    c.displayed = true; 
-    c.display(pos);
-  }else{
-   c.displayed = false; 
+    else {
+     c.displayed = false; 
+   }
   }
-}
-  
   barscale.draw();
   axis.draw();
   if(axis.playButton().getPlay()) {
-    axis.MinSliderButton().drag(axis.MinSliderButton.getXPos()+axis.getDayUnit());
+    axis.playWidget().drag(axis.playWidget.getXPos()+axis.getDayUnit());
   }
  
   for(FilterButton fb: filterButtons){
@@ -162,18 +164,22 @@ void mouseClicked(){
 }
 
 void mouseDragged(){
-  if (this.axis.MinSliderButton.clicked() || this.axis.MinSliderButton.getClicked()) {
-    this.axis.MinSliderButton.setClicked(true);
-    this.axis.MinSliderButton.drag(mouseX);
+  if (this.axis.minSliderButton.clicked() || this.axis.minSliderButton.clicked) {
+    this.axis.minSliderButton.clicked = true;
+    this.axis.minSliderButton.drag(mouseX);
+    this.axis.playWidget.x_pos = this.axis.minSliderButton.x_pos;
+    this.axis.playWidget.display = false;
+    this.axis.resetCaseWaving();
+    this.axis.playButton.play = false;
   }
 }
 
 void mouseReleased(){
   if (this.axis.playButton.clicked() || this.axis.clicked() ||
-      this.axis.MinSliderButton.clicked() || this.axis.MinSliderButton.getClicked()) {
+      this.axis.minSliderButton.clicked() || this.axis.minSliderButton.getClicked()) {
      listen(); 
   }
-  this.axis.MinSliderButton.setClicked(false);
+  this.axis.minSliderButton.clicked = false;
 }
 
 void listen() {
@@ -188,7 +194,7 @@ void mute() {
 
 public void mousePressed() {
   if (this.axis.playButton.clicked() || this.axis.clicked() || 
-      this.axis.MinSliderButton.clicked() || this.axis.MinSliderButton.getClicked()) {
+      this.axis.minSliderButton.clicked() || this.axis.minSliderButton.getClicked()) {
     mute(); 
    }
 }

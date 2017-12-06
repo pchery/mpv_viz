@@ -34,6 +34,7 @@ class PlayButton {
    }
    else {
      this.play = true;
+     axis.playWidget.display = true;
    }
   }
 }
