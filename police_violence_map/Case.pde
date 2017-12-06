@@ -18,6 +18,7 @@ class Case{
   Map<String, String> attrib = new HashMap<String,String>();
   String filterValue;
   int wave_rad;
+  float wave_stroke_weight=4;
   boolean wave_on;
   Case(float lon, float lat, String name, String date, String race, String age, String gender, String state){
   
@@ -80,9 +81,12 @@ class Case{
       ellipse(pos.x, pos.y, marker_rad, marker_rad);
     }
     fill(255,0);
+    strokeWeight(wave_stroke_weight);
     ellipse(pos.x, pos.y, wave_rad, wave_rad);
+    strokeWeight(1);
     if(wave_on && axis.playButton().play){
       wave_rad += 4;
+      wave_stroke_weight -= 0.5;
     }
   }
   
