@@ -60,10 +60,9 @@ void setup(){
   barscale = new BarScaleUI(this, map, 100, 700);
   filterButtons = new FilterButton[3];
   filterButtons[2] = new FilterButton("Age", 25, 10);
-  filterButtons[0] = new FilterButton("Race", 150, 10);
-  filterButtons[1] = new FilterButton("Gender", 275, 10);
+  filterButtons[0] = new FilterButton("Race", 100, 10);
+  filterButtons[1] = new FilterButton("Gender", 175, 10);
   axis = new Axis(50,height-50,width-100);
-  
   
   eventDispatcher = new EventDispatcher();
   MouseHandler mouseHandler = new MouseHandler(this, map);
@@ -96,6 +95,7 @@ void draw(){
   if(axis.playButton().getPlay()) {
     axis.MinSliderButton().drag(axis.MinSliderButton.getXPos()+axis.getDayUnit());
   }
+  
  
   for(FilterButton fb: filterButtons){
     fb.display();
@@ -109,6 +109,7 @@ void draw(){
       popup_displayed = null;
     } 
   }
+  
 }
 
 void loadData(){

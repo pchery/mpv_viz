@@ -1,5 +1,5 @@
 class FilterButton {
-  float w = 100; 
+  float w = 75; 
   boolean highlighted;
   float x;
   float y;
@@ -7,6 +7,7 @@ class FilterButton {
   float y_pad = 3;
   String label;
   Legend legend; 
+  BarChart barchart;
   
   FilterButton(String label, float x, float y){
     this.label = label;
@@ -14,12 +15,14 @@ class FilterButton {
     this.y = y;
     
     legend = new Legend(label, colormap.findRows(label,0));
+    barchart = new BarChart(label, 10, height - 225);
     highlighted = false;
   }
   
   void display(){
     if(highlighted){
      legend.display();
+     barchart.display();
      fill(122,122,122); 
     }else{
      fill(255); 
