@@ -18,7 +18,7 @@ class Case{
   Map<String, String> attrib = new HashMap<String,String>();
   String filterValue;
   int wave_rad;
-  boolean wave_on;
+  boolean wave_on, pause_time=false;
   Case(float lon, float lat, String name, String date, String race, String age, String gender, String state){
   
     wave_rad = marker_rad;
@@ -54,6 +54,10 @@ class Case{
     if(wave_rad > 50){
        wave_rad = 0;
        wave_on = false;
+       pause_time = false;
+    }
+    else {
+     pause_time = true; 
     }
     
     
@@ -65,6 +69,7 @@ class Case{
         color c = #aaaaaa;
         if(filterValue.equals("Age")){
           if(!attrib.get(filterValue).equals("Unknown") && !attrib.get(filterValue).equals("NA")){
+            print(Math.ceil(Integer.valueOf(attrib.get(filterValue))/10.00) + "\n");
             double age = Math.ceil(Integer.valueOf(attrib.get(filterValue))/10.0)*10;
             if(age < 90){
               c = unhex(colormap.findRow(String.valueOf((int)age), 1).getString(2));
