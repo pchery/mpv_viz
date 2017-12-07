@@ -39,6 +39,7 @@ EventDispatcher eventDispatcher;
 
 void setup(){
   size(800,700,P2D);
+  frameRate(10);
   //fullScreen(P2D);
   
   popup_displayed = null;

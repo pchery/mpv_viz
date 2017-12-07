@@ -2,7 +2,7 @@ class BarChart{
   float x;
   float y;
   float container_w;
-  float container_h = 150;
+  float container_h = 100;
   float bar_w = 50;
   float bar_h;
   float bar_pad = 10;
