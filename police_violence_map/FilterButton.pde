@@ -15,7 +15,7 @@ class FilterButton {
     this.y = y;
     
     legend = new Legend(label, colormap.findRows(label,0));
-    barchart = new BarChart(label, 10, height - 225);
+    barchart = new BarChart(label, 10, height - 275);
     highlighted = false;
   }
   
