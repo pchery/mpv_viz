@@ -33,7 +33,8 @@ FilterButton selected_fb;
 Table colormap; 
 Table table;
 ZoomWidget zoom;
-
+Map<String, Integer> attrib_count;
+int cases_displayed;
 EventDispatcher eventDispatcher;
 
 void setup(){
@@ -58,6 +59,7 @@ void setup(){
   map.setZoomRange(4, 15);
   map.setTweening(true);
   loadData();
+  attrib_count = new HashMap<String, Integer>();
   barscale = new BarScaleUI(this, map, 100, 700);
   filterButtons = new FilterButton[3];
   filterButtons[2] = new FilterButton("Age", 25, 10);
@@ -68,7 +70,7 @@ void setup(){
   eventDispatcher = new EventDispatcher();
   MouseHandler mouseHandler = new MouseHandler(this, map);
   eventDispatcher.addBroadcaster(mouseHandler);
-  eventDispatcher.register(map, PanMapEvent.PAN_UP, map.getId());
+  eventDispatcher.register(map, PanMapEvent.TYPE_PAN, map.getId());
   eventDispatcher.unregister(map, ZoomMapEvent.TYPE_ZOOM, map.getId());
   //eventDispatcher.unregister(map, PanMapEvent.PAN_BY, map.getId());
  // eventDispatcher.register(map, ZoomMapEvent.TYPE_ZOOM, map.getId());
@@ -79,13 +81,30 @@ void setup(){
 void draw(){
   background(0);
   map.draw();
-  int cases_displayed = 0;
+  if(selected_fb != null){
+    for(TableRow tr : colormap.findRows(selected_fb.label, 0)){
+      //print(tr.getString(1) + "\n");
+      attrib_count.put(tr.getString(1), 0);
+    }
+  }
+  cases_displayed = 0;
   for(Case c:cases){
     if(axis.displayCase(c)) {
       cases_displayed++;
       ScreenPosition pos = map.getScreenPosition(c.location);
       if(selected_fb != null){
         c.filterValue = selected_fb.label;
+        //print(attrib_count.get(c.attrib.get(c.filterValue))+ "\n");
+        if(c.filterValue.equals("Age")){
+          if(!c.attrib.get(c.filterValue).equals("Unknown") && !c.attrib.get(c.filterValue).equals("NA")){
+            double age = Math.ceil(Integer.valueOf(c.attrib.get(c.filterValue))/10.0)*10;
+            if(age < 90){
+              attrib_count.put(String.valueOf((int)age), attrib_count.get(String.valueOf((int)age)) + 1);
+            }
+          }
+        }else{
+          attrib_count.put(c.attrib.get(c.filterValue), attrib_count.get(c.attrib.get(c.filterValue)) + 1);
+        }
       }
       else {
         c.filterValue = "";
@@ -117,7 +136,6 @@ void draw(){
       popup_displayed = null;
     } 
   }
-  
 }
 
 void loadData(){
@@ -137,7 +155,7 @@ void mouseMoved(){
  
 }
 void mouseClicked(MouseEvent evt){
-  
+   //eventDispatcher.register(map, PanMapEvent.PAN_UP, map.getId());
   if(zoom.plusClicked()){
     map.zoomAndPanTo(width/2, height/2, map.getZoomLevel() + 1);
   }else if(zoom.minusClicked()){
@@ -190,23 +208,23 @@ void mouseDragged(){
 void mouseReleased(){
   if (this.filterButtons[0].onClicked(mouseX, mouseY) || this.filterButtons[1].onClicked(mouseX, mouseY) || this.filterButtons[2].onClicked(mouseX, mouseY) ||this.axis.playButton.clicked() || this.axis.clicked() ||
       this.axis.minSliderButton.clicked() || this.axis.minSliderButton.getClicked()) {
-     //listen(); 
+     listen(); 
   }
   this.axis.minSliderButton.clicked = false;
 }
 
-//void zoomListen() {
-//  eventDispatcher.register(map, ZoomMapEvent.TYPE_ZOOM, map.getId());
-//}
+void listen() {
+  eventDispatcher.register(map, PanMapEvent.TYPE_PAN, map.getId());
+}
 
-//void zoommute() {
-//    eventDispatcher.unregister(map, ZoomMapEvent.TYPE_ZOOM, map.getId());
-//}
+void mute() {
+    eventDispatcher.unregister(map, PanMapEvent.TYPE_PAN, map.getId());
+}
 
 public void mousePressed() {
   if (this.filterButtons[0].onClicked(mouseX, mouseY) || this.filterButtons[1].onClicked(mouseX, mouseY) || this.filterButtons[2].onClicked(mouseX, mouseY) || this.axis.playButton.clicked() || this.axis.clicked() || 
       this.axis.minSliderButton.clicked() || this.axis.minSliderButton.getClicked()) {
-    //mute(); 
+    mute(); 
    }
 }
 

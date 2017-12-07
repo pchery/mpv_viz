@@ -24,8 +24,12 @@ class Legend{
       fill(0);
       textAlign(CENTER);
       textSize(9);
-      
-      text(tr.getString(1).replaceAll(" ", "\n"), width - 7 - (rect_width + x_pad)*i + rect_width/2, 10 + y_pad + rect_height + textAscent() + textDescent());
+      if(name.equals("Age")){
+         int age = Integer.valueOf(tr.getString(1));
+         text(age - 10 + " - " + age , width - 7 - (rect_width + x_pad)*i + rect_width/2, 10 + y_pad + rect_height + textAscent() + textDescent());
+      }else{
+        text(tr.getString(1).replaceAll(" ", "\n"), width - 7 - (rect_width + x_pad)*i + rect_width/2, 10 + y_pad + rect_height + textAscent() + textDescent());
+      }
       textSize(10);
       i--;
     }
