@@ -19,8 +19,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.text.ParseException;
 import java.util.Calendar;
-Axis axis;
+import java.util.concurrent.TimeUnit;
 
+Axis axis;
 BarScaleUI barscale;
 JSONArray c; 
 FilterButton[] filterButtons;
@@ -65,7 +66,7 @@ void setup(){
   filterButtons[2] = new FilterButton("Age", 25, 10);
   filterButtons[0] = new FilterButton("Race", 100, 10);
   filterButtons[1] = new FilterButton("Gender", 175, 10);
-  axis = new Axis(50,height-50,width-100);
+  axis = new Axis(50,height-50,width-50);
   zoom = new ZoomWidget(width - 40, height - 150);
   eventDispatcher = new EventDispatcher();
   MouseHandler mouseHandler = new MouseHandler(this, map);
