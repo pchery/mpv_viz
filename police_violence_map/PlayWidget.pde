@@ -59,6 +59,8 @@ class PlayWidget {
       textAlign(CENTER);
       fill(0);
       text(this.axis.formatXPosToDate(x_pos), x_pos, y_pos+30);
+      if(this.x_pos == axis.x_pos+axis.len)
+        axis.playButton.play = false;
     }
   }
 }

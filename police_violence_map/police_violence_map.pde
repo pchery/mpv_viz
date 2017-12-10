@@ -191,6 +191,8 @@ void mouseClicked(MouseEvent evt){
   }
   else if (this.axis.clicked()) {
     this.axis.MinSliderButton().setXPos(mouseX);
+    this.axis.playWidget.display = false;
+    this.axis.playWidget.x_pos = this.axis.minSliderButton.x_pos;
   }
   
 }

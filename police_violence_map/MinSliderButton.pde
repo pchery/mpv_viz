@@ -49,6 +49,7 @@ class MinSliderButton {
     else {
       this.x_pos = this.MIN_X_POS;
     }
+    axis.playWidget.x_pos = this.x_pos;
   }
   
   void draw() {
