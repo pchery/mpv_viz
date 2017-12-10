@@ -119,8 +119,8 @@ void draw(){
   }
   barscale.draw();
   axis.draw();
-  if(axis.playButton().getPlay()) {
-    axis.playWidget().drag(axis.playWidget.getXPos()+axis.getDayUnit());
+  if(axis.playButton.play) {
+    axis.playWidget.drag(axis.playWidget.x_pos+axis.day_unit);
   }
   
  
@@ -186,34 +186,36 @@ void mouseClicked(MouseEvent evt){
       }
     }
   }
-  if (this.axis.playButton.clicked()) {
-    this.axis.playButton.resetPlay();
+  if (axis.playButton.clicked()) {
+    axis.playButton.resetPlay();
   }
-  else if (this.axis.clicked()) {
-    this.axis.MinSliderButton().setXPos(mouseX);
-    this.axis.playWidget.display = false;
-    this.axis.playWidget.x_pos = this.axis.minSliderButton.x_pos;
+  else if (axis.clicked()) {
+    axis.minSliderButton.x_pos = mouseX;
+    axis.playWidget.display = false;
+    axis.playWidget.x_pos = axis.minSliderButton.x_pos;
+    axis.playButton.play = false;
+    axis.resetCaseWaving();
   }
   
 }
 
 void mouseDragged(){
-  if (this.axis.minSliderButton.clicked() || this.axis.minSliderButton.clicked) {
-    this.axis.minSliderButton.clicked = true;
-    this.axis.minSliderButton.drag(mouseX);
-    this.axis.playWidget.x_pos = this.axis.minSliderButton.x_pos;
-    this.axis.playWidget.display = false;
-    this.axis.resetCaseWaving();
-    this.axis.playButton.play = false;
+  if (axis.minSliderButton.clicked() || axis.minSliderButton.clicked) {
+    axis.minSliderButton.clicked = true;
+    axis.minSliderButton.drag(mouseX);
+    axis.playWidget.x_pos = axis.minSliderButton.x_pos;
+    axis.playWidget.display = false;
+    axis.resetCaseWaving();
+    axis.playButton.play = false;
   }
 }
 
 void mouseReleased(){
-  if (this.filterButtons[0].onClicked(mouseX, mouseY) || this.filterButtons[1].onClicked(mouseX, mouseY) || this.filterButtons[2].onClicked(mouseX, mouseY) ||this.axis.playButton.clicked() || this.axis.clicked() ||
-      this.axis.minSliderButton.clicked() || this.axis.minSliderButton.getClicked()) {
+  if (this.filterButtons[0].onClicked(mouseX, mouseY) || this.filterButtons[1].onClicked(mouseX, mouseY) || this.filterButtons[2].onClicked(mouseX, mouseY) || axis.playButton.clicked() || axis.clicked() ||
+      axis.minSliderButton.clicked() || axis.minSliderButton.clicked) {
      listen(); 
   }
-  this.axis.minSliderButton.clicked = false;
+  axis.minSliderButton.clicked = false;
 }
 
 void listen() {
@@ -225,8 +227,8 @@ void mute() {
 }
 
 public void mousePressed() {
-  if (this.filterButtons[0].onClicked(mouseX, mouseY) || this.filterButtons[1].onClicked(mouseX, mouseY) || this.filterButtons[2].onClicked(mouseX, mouseY) || this.axis.playButton.clicked() || this.axis.clicked() || 
-      this.axis.minSliderButton.clicked() || this.axis.minSliderButton.getClicked()) {
+  if (this.filterButtons[0].onClicked(mouseX, mouseY) || this.filterButtons[1].onClicked(mouseX, mouseY) || this.filterButtons[2].onClicked(mouseX, mouseY) || axis.playButton.clicked() || axis.clicked() || 
+      axis.minSliderButton.clicked() || axis.minSliderButton.clicked) {
     mute(); 
    }
 }

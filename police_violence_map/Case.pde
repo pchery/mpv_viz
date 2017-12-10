@@ -85,7 +85,7 @@ class Case{
     strokeWeight(wave_stroke_weight);
     ellipse(pos.x, pos.y, wave_rad, wave_rad);
     strokeWeight(1);
-    if(wave_on && axis.playButton().play){
+    if(wave_on && axis.playButton.play){
       wave_rad += 4;
       wave_stroke_weight -= 0.2;
     }

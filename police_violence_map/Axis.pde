@@ -25,21 +25,8 @@ class Axis {
    num_days = TimeUnit.DAYS.convert(num_days, TimeUnit.MILLISECONDS);
    day_unit = len/((float)num_days);
    playButton = new PlayButton(this.x_pos-25, this.y_pos-10, 20);
-   minSliderButton = new MinSliderButton(this, 8, 20);
+   minSliderButton = new MinSliderButton(8, 20);
    playWidget = new PlayWidget(this, 10);
-  }
-  
-  PlayButton playButton() {
-    return this.playButton;
-  }
-  
-  
-  MinSliderButton MinSliderButton() {
-    return this.minSliderButton;
-  }
-  
-  PlayWidget playWidget() {
-    return this.playWidget;
   }
   
   String formatXPosToDate(float x) {
@@ -58,37 +45,24 @@ class Axis {
       long min_date = 0;
       try {
       case_date = sdf.parse(c.s_date).getTime();
-      current_date = sdf.parse(formatXPosToDate(this.playWidget.getXPos())).getTime();
-      min_date = sdf.parse(formatXPosToDate(this.minSliderButton.getXPos())).getTime();
+      current_date = sdf.parse(formatXPosToDate(this.playWidget.x_pos)).getTime();
+      min_date = sdf.parse(formatXPosToDate(this.minSliderButton.x_pos)).getTime();
       }
       catch (ParseException ex) { print("Error converting strings to dates");}
       return case_date >= min_date && case_date <= current_date;
     }
     else {
-      String current_date = formatXPosToDate(this.minSliderButton.getXPos());
+      String current_date = formatXPosToDate(this.minSliderButton.x_pos);
       return c.s_date.equals(current_date) && !Float.isNaN(c.latitude) && !Float.isNaN(c.latitude);
     }
   }
   
   void resetCaseWaving() {
-    for (Case c : cases)
+    for (Case c : cases) {
+      c.wave_rad = 0;
+      c.wave_stroke_weight = 3;
       c.wave_on = true;
-  }
-  
-  float getXPos() {
-   return this.x_pos; 
-  }
-  
-  float getYPos() {
-   return this.y_pos; 
-  }
-  
-  float getLen() {
-   return this.len; 
-  }
-  
-  float getDayUnit() {
-    return this.day_unit;
+    }
   }
   
   boolean clicked() {

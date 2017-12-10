@@ -9,29 +9,13 @@ class MinSliderButton {
   
   MinSliderButton(Axis axis, float width_len, float height_len) {
     this.axis = axis;
-    this.x_pos = axis.getXPos();
-    this.MAX_X_POS = axis.getXPos() + axis.getLen();
-    this.MIN_X_POS = axis.getXPos();
-    this.y_pos = axis.getYPos();
+    this.x_pos = axis.x_pos;
+    this.MAX_X_POS = axis.x_pos + axis.len;
+    this.MIN_X_POS = axis.x_pos;
+    this.y_pos = axis.y_pos;
     this.width_len = width_len;
     this.height_len = height_len;
     this.current_pos = x_pos;
-  }
-  
-  boolean getClicked() {
-   return this.clicked; 
-  }
-  
-  void setClicked(boolean bool) {
-   this.clicked = bool; 
-  }
-  
-  float getXPos() {
-   return this.x_pos; 
-  }
-  
-  void setXPos(float x_pos) {
-   this.x_pos = x_pos; 
   }
   
   boolean clicked() {
