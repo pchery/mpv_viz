@@ -25,7 +25,7 @@ class Axis {
    num_days = TimeUnit.DAYS.convert(num_days, TimeUnit.MILLISECONDS);
    day_unit = len/((float)num_days);
    playButton = new PlayButton(this.x_pos-25, this.y_pos-10, 20);
-   minSliderButton = new MinSliderButton(8, 20);
+   minSliderButton = new MinSliderButton(this, 8, 20);
    playWidget = new PlayWidget(this, 10);
   }
   
