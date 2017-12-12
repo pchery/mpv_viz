@@ -38,9 +38,9 @@ Map<String, Integer> attrib_count;
 int cases_displayed;
 EventDispatcher eventDispatcher;
 void setup(){
-  //size(800,700,P2D);
+  size(800,700,P2D);
   frameRate(10);
-  fullScreen(P2D);
+  //fullScreen(P2D);
   
   popup_displayed = null;
   selected_fb = null;
@@ -137,11 +137,6 @@ void draw(){
       popup_displayed = null;
     } 
   }
-  if(millis() > 15000){
-    save("s1.png");
-    
-  }
-  //print(millis() + "\n");
 }
 
 void loadData(){
