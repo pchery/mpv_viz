@@ -3,7 +3,7 @@ class Axis {
   float x_pos, y_pos, len;
   float time_unit, current_time;
   Calendar calendar = Calendar.getInstance();
-  String s_date = "2013-01-01", e_date = "2018-01-01";
+  String s_date = "2012-12-31", e_date = "2017-11-01";
   Date start_date, end_date;
   float day_unit;
   long num_days = 1827;

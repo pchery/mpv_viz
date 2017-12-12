@@ -66,7 +66,7 @@ class Case{
         color c = #aaaaaa;
         if(filterValue.equals("Age")){
           if(!attrib.get(filterValue).equals("Unknown") && !attrib.get(filterValue).equals("NA")){
-            double age = Math.ceil(Integer.valueOf(attrib.get(filterValue))/10.0)*10;
+            double age = Math.ceil(Integer.valueOf(attrib.get(filterValue).replace("s", ""))/10.0)*10;
             if(age < 90){
               c = unhex(colormap.findRow(String.valueOf((int)age), 1).getString(2));
             }

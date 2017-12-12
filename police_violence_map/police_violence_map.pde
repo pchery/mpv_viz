@@ -36,11 +36,10 @@ ZoomWidget zoom;
 Map<String, Integer> attrib_count;
 int cases_displayed;
 EventDispatcher eventDispatcher;
-
 void setup(){
-  size(800,700,P2D);
+  //size(800,700,P2D);
   frameRate(10);
-  //fullScreen(P2D);
+  fullScreen(P2D);
   
   popup_displayed = null;
   selected_fb = null;
@@ -74,7 +73,6 @@ void setup(){
   eventDispatcher.unregister(map, ZoomMapEvent.TYPE_ZOOM, map.getId());
   //eventDispatcher.unregister(map, PanMapEvent.PAN_BY, map.getId());
  // eventDispatcher.register(map, ZoomMapEvent.TYPE_ZOOM, map.getId());
- 
 }
 
 
@@ -97,10 +95,12 @@ void draw(){
         //print(attrib_count.get(c.attrib.get(c.filterValue))+ "\n");
         if(c.filterValue.equals("Age")){
           if(!c.attrib.get(c.filterValue).equals("Unknown") && !c.attrib.get(c.filterValue).equals("NA")){
-            double age = Math.ceil(Integer.valueOf(c.attrib.get(c.filterValue))/10.0)*10;
+            double age = Math.ceil(Integer.valueOf(c.attrib.get(c.filterValue).replace("s", ""))/10.0)*10;
             if(age < 90){
               attrib_count.put(String.valueOf((int)age), attrib_count.get(String.valueOf((int)age)) + 1);
             }
+            //if(age >= 90
+            //  attrib_count.put(String.valueOf((int)age), attrib_count.get(String.valueOf((int)age)) + 1);
           }
         }else{
           attrib_count.put(c.attrib.get(c.filterValue), attrib_count.get(c.attrib.get(c.filterValue)) + 1);
@@ -136,6 +136,11 @@ void draw(){
       popup_displayed = null;
     } 
   }
+  if(millis() > 15000){
+    save("s1.png");
+    
+  }
+  //print(millis() + "\n");
 }
 
 void loadData(){
