@@ -9,29 +9,14 @@ class PlayWidget {
   
   PlayWidget(Axis axis, float radius) {
     this.axis = axis;
-    this.x_pos = axis.MinSliderButton().getXPos();
-    this.MAX_X_POS = axis.getXPos() + axis.getLen();
-    this.MIN_X_POS = axis.getXPos();
-    this.y_pos = axis.getYPos();
+    this.x_pos = axis.minSliderButton.x_pos;
+    this.MAX_X_POS = axis.x_pos + axis.len;
+    this.MIN_X_POS = axis.x_pos;
+    this.y_pos = axis.y_pos;
     this.radius = radius;
     this.current_pos = x_pos;
   }
   
-  boolean getClicked() {
-   return this.clicked; 
-  }
-  
-  void setClicked(boolean bool) {
-   this.clicked = bool; 
-  }
-  
-  float getXPos() {
-   return this.x_pos; 
-  }
-  
-  void setXPos(float x_pos) {
-   this.x_pos = x_pos; 
-  }
   
   boolean clicked() {
     return (Math.sqrt((mouseX-this.x_pos)*(mouseX-this.x_pos) + (mouseY-this.y_pos)*(mouseY-this.y_pos)) <= 3);
@@ -59,6 +44,8 @@ class PlayWidget {
       textAlign(CENTER);
       fill(0);
       text(this.axis.formatXPosToDate(x_pos), x_pos, y_pos+30);
+      if(this.x_pos == axis.x_pos+axis.len)
+        axis.playButton.play = false;
     }
   }
 }

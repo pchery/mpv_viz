@@ -3,45 +3,35 @@ class Axis {
   float x_pos, y_pos, len;
   float time_unit, current_time;
   Calendar calendar = Calendar.getInstance();
-  String s_date = "2012-12-31", e_date = "2017-11-01";
+  String s_date = "2013-07-03", e_date = "2017-12-01";
   Date start_date, end_date;
   float day_unit;
-  long num_days = 1827;
+  long num_days;
   PlayButton playButton;
   MinSliderButton minSliderButton;
   PlayWidget playWidget;
   
-  Axis(float x_pos, float y_pos, float len) {
+  Axis(float x_pos, float y_pos, float axis_end) {
    this.x_pos = x_pos;
    this.y_pos = y_pos;
-   this.len = len;
-   day_unit = len/this.num_days;
+   this.len = axis_end-x_pos;
    try {
     this.start_date = new SimpleDateFormat("yyyy-MM-dd").parse(s_date);
     this.end_date = new SimpleDateFormat("yyyy-MM-dd").parse(e_date);
+    num_days = end_date.getTime() - start_date.getTime();
    }
    catch (ParseException ex) { print("Error converting strings to dates");}
+
+   num_days = TimeUnit.DAYS.convert(num_days, TimeUnit.MILLISECONDS);
+   day_unit = len/((float)num_days);
    playButton = new PlayButton(this.x_pos-25, this.y_pos-10, 20);
-   minSliderButton = new MinSliderButton(this, 8, 20);
+   minSliderButton = new MinSliderButton(8, 20);
    playWidget = new PlayWidget(this, 10);
   }
   
-  PlayButton playButton() {
-    return this.playButton;
-  }
-  
-  
-  MinSliderButton MinSliderButton() {
-    return this.minSliderButton;
-  }
-  
-  PlayWidget playWidget() {
-    return this.playWidget;
-  }
-  
-  String formatXPosToDate(float x_pos) {
+  String formatXPosToDate(float x) {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    int days_num = (int) Math.floor(x_pos/this.day_unit);
+    int days_num = (int) Math.floor((x-this.x_pos)/this.day_unit);
     this.calendar.setTimeInMillis(start_date.getTime());
     calendar.add(Calendar.DATE, days_num);
     return sdf.format(calendar.getTime());
@@ -55,37 +45,24 @@ class Axis {
       long min_date = 0;
       try {
       case_date = sdf.parse(c.s_date).getTime();
-      current_date = sdf.parse(formatXPosToDate(this.playWidget.getXPos())).getTime();
-      min_date = sdf.parse(formatXPosToDate(this.minSliderButton.getXPos())).getTime();
+      current_date = sdf.parse(formatXPosToDate(this.playWidget.x_pos)).getTime();
+      min_date = sdf.parse(formatXPosToDate(this.minSliderButton.x_pos)).getTime();
       }
       catch (ParseException ex) { print("Error converting strings to dates");}
       return case_date >= min_date && case_date <= current_date;
     }
     else {
-      String current_date = formatXPosToDate(this.minSliderButton.getXPos());
+      String current_date = formatXPosToDate(this.minSliderButton.x_pos);
       return c.s_date.equals(current_date) && !Float.isNaN(c.latitude) && !Float.isNaN(c.latitude);
     }
   }
   
   void resetCaseWaving() {
-    for (Case c : cases)
+    for (Case c : cases) {
+      c.wave_rad = 0;
+      c.wave_stroke_weight = 3;
       c.wave_on = true;
-  }
-  
-  float getXPos() {
-   return this.x_pos; 
-  }
-  
-  float getYPos() {
-   return this.y_pos; 
-  }
-  
-  float getLen() {
-   return this.len; 
-  }
-  
-  float getDayUnit() {
-    return this.day_unit;
+    }
   }
   
   boolean clicked() {
