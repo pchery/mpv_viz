@@ -38,9 +38,9 @@ Map<String, Integer> attrib_count;
 int cases_displayed;
 EventDispatcher eventDispatcher;
 void setup(){
-  size(800,700,P2D);
+  //size(800,700,P2D);
   frameRate(10);
-  //fullScreen(P2D);
+  fullScreen(P2D);
   
   popup_displayed = null;
   selected_fb = null;
@@ -100,8 +100,9 @@ void draw(){
             if(age < 90){
               attrib_count.put(String.valueOf((int)age), attrib_count.get(String.valueOf((int)age)) + 1);
             }
-            //if(age >= 90
-            //  attrib_count.put(String.valueOf((int)age), attrib_count.get(String.valueOf((int)age)) + 1);
+            if(age >= 90){
+              attrib_count.put("90", attrib_count.get("90") + 1);
+            }
           }
         }else{
           attrib_count.put(c.attrib.get(c.filterValue), attrib_count.get(c.attrib.get(c.filterValue)) + 1);

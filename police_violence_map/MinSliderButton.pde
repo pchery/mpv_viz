@@ -39,6 +39,8 @@ class MinSliderButton {
   void draw() {
     fill(47,79,79);
     rect(x_pos-(width_len/2), y_pos-(height_len/2), width_len, height_len);
+    fill(255);
+    rect(x_pos - textWidth(this.axis.formatXPosToDate(x_pos)), y_pos + 14, 2*textWidth(this.axis.formatXPosToDate(x_pos)), 20);
     textAlign(CENTER);
     textSize(16);
     fill(0);

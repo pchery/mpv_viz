@@ -70,6 +70,9 @@ class Case{
             if(age < 90){
               c = unhex(colormap.findRow(String.valueOf((int)age), 1).getString(2));
             }
+            if(age >= 90){
+               c = unhex(colormap.findRow("90", 1).getString(2));
+            }
           }
         }else{
           c = unhex(colormap.findRow(attrib.get(filterValue), 1).getString(2));

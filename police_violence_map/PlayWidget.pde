@@ -42,11 +42,13 @@ class PlayWidget {
       strokeWeight(3);
       line(this.axis.minSliderButton.x_pos, this.axis.minSliderButton.y_pos, this.x_pos, this.y_pos);
       stroke(0,0,0);
+      fill(255);
+      strokeWeight(1);
+      rect(x_pos - textWidth(this.axis.formatXPosToDate(x_pos)), y_pos - 36, 2*textWidth(this.axis.formatXPosToDate(x_pos)), 20);
       textAlign(CENTER);
       textSize(16);
       fill(255,0,0);
       text(this.axis.formatXPosToDate(x_pos), x_pos, y_pos-20);
-      strokeWeight(1);
       textSize(10);
       fill(0);
       if(this.x_pos == axis.x_pos+axis.len)
