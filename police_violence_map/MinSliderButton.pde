@@ -40,7 +40,9 @@ class MinSliderButton {
     fill(47,79,79);
     rect(x_pos-(width_len/2), y_pos-(height_len/2), width_len, height_len);
     textAlign(CENTER);
+    textSize(16);
     fill(0);
-    text(this.axis.formatXPosToDate(x_pos), x_pos, y_pos+40);
+    text(this.axis.formatXPosToDate(x_pos), x_pos, y_pos+30);
+    textSize(10);
   }
 }

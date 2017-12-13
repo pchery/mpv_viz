@@ -26,7 +26,7 @@ class Axis {
    day_unit = len/((float)num_days);
    playButton = new PlayButton(this.x_pos-25, this.y_pos-10, 20);
    minSliderButton = new MinSliderButton(this, 8, 20);
-   playWidget = new PlayWidget(this, 10);
+   playWidget = new PlayWidget(this, 15);
   }
   
   String formatXPosToDate(float x) {
@@ -74,9 +74,11 @@ class Axis {
    fill(255);
    float x_pad = 5;
    float y_pad = 5;
-   rect(playButton.x_pos - x_pad, this.y_pos - playButton.width_len/2 - y_pad,this.x_pos+this.len + 2*x_pad, playButton.width_len + 2*y_pad);
+   //rect(playButton.x_pos - x_pad, this.y_pos - playButton.width_len/2 - y_pad,this.x_pos+this.len + 2*x_pad, playButton.width_len + 8*y_pad);
+   strokeWeight(3);
    line(this.x_pos, this.y_pos, this.x_pos+this.len, this.y_pos);
    fill(119,136,153);
+   strokeWeight(1);
    this.playButton.draw();
    this.minSliderButton.draw();
    this.playWidget.draw();

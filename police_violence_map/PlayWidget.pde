@@ -39,11 +39,16 @@ class PlayWidget {
       fill(255,0,0);
       ellipse(x_pos, y_pos, radius, radius);
       stroke(255,0,0);
+      strokeWeight(3);
       line(this.axis.minSliderButton.x_pos, this.axis.minSliderButton.y_pos, this.x_pos, this.y_pos);
       stroke(0,0,0);
       textAlign(CENTER);
+      textSize(16);
+      fill(255,0,0);
+      text(this.axis.formatXPosToDate(x_pos), x_pos, y_pos-20);
+      strokeWeight(1);
+      textSize(10);
       fill(0);
-      text(this.axis.formatXPosToDate(x_pos), x_pos, y_pos+30);
       if(this.x_pos == axis.x_pos+axis.len)
         axis.playButton.play = false;
     }
