@@ -65,7 +65,7 @@ void setup(){
   filterButtons[2] = new FilterButton("Age", 25, 10);
   filterButtons[0] = new FilterButton("Race", 100, 10);
   filterButtons[1] = new FilterButton("Gender", 175, 10);
-  axis = new Axis(50,height-50,width-50);
+  axis = new Axis(50,height-35,width-50);
   zoom = new ZoomWidget(width - 40, height - 150);
   eventDispatcher = new EventDispatcher();
   MouseHandler mouseHandler = new MouseHandler(this, map);
