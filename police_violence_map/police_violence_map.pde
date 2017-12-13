@@ -22,7 +22,6 @@ import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 Axis axis;
-BarScaleUI barscale;
 JSONArray c; 
 FilterButton[] filterButtons;
 import java.util.*;
@@ -38,9 +37,9 @@ Map<String, Integer> attrib_count;
 int cases_displayed;
 EventDispatcher eventDispatcher;
 void setup(){
-  size(800,700,P2D);
+  //size(800,700,P2D);
   frameRate(10);
-  //fullScreen(P2D);
+  fullScreen(P2D);
   
   popup_displayed = null;
   selected_fb = null;
@@ -60,7 +59,6 @@ void setup(){
   map.setTweening(true);
   loadData();
   attrib_count = new HashMap<String, Integer>();
-  barscale = new BarScaleUI(this, map, 100, 700);
   filterButtons = new FilterButton[3];
   filterButtons[2] = new FilterButton("Age", 25, 10);
   filterButtons[0] = new FilterButton("Race", 100, 10);
@@ -71,7 +69,7 @@ void setup(){
   MouseHandler mouseHandler = new MouseHandler(this, map);
   eventDispatcher.addBroadcaster(mouseHandler);
   eventDispatcher.register(map, PanMapEvent.TYPE_PAN, map.getId());
-  eventDispatcher.unregister(map, ZoomMapEvent.TYPE_ZOOM, map.getId());
+  eventDispatcher.register(map, ZoomMapEvent.TYPE_ZOOM, map.getId());
   //eventDispatcher.unregister(map, PanMapEvent.PAN_BY, map.getId());
  // eventDispatcher.register(map, ZoomMapEvent.TYPE_ZOOM, map.getId());
 }
@@ -100,8 +98,9 @@ void draw(){
             if(age < 90){
               attrib_count.put(String.valueOf((int)age), attrib_count.get(String.valueOf((int)age)) + 1);
             }
-            //if(age >= 90
-            //  attrib_count.put(String.valueOf((int)age), attrib_count.get(String.valueOf((int)age)) + 1);
+            if(age >= 90){
+              attrib_count.put("90", attrib_count.get("90") + 1);
+            }
           }
         }else{
           attrib_count.put(c.attrib.get(c.filterValue), attrib_count.get(c.attrib.get(c.filterValue)) + 1);
@@ -117,7 +116,6 @@ void draw(){
      c.displayed = false; 
    }
   }
-  barscale.draw();
   axis.draw();
   if(axis.playButton.play) {
     axis.playWidget.drag(axis.playWidget.x_pos+axis.day_unit);
@@ -146,7 +144,7 @@ void loadData(){
   cases = new Case[table.getRowCount()];
   for(int i = 0; i < table.getRowCount(); i++){
     TableRow r = table.getRow(i);
-    cases[i] = new Case(r.getFloat("latitude"), r.getFloat("longitude"), r.getString("name"), r.getString("date"), r.getString("race"), r.getString("age"), r.getString("gender"),r.getString("state")); 
+    cases[i] = new Case(r.getFloat("latitude"), r.getFloat("longitude"), r.getString("name"), r.getString("date"), r.getString("race"), r.getString("age"), r.getString("gender"),r.getString("state"), r.getString("alleged_weapon"), r.getString("cause"),r.getString("agency")); 
   }
   
   
@@ -207,6 +205,7 @@ void mouseDragged(){
     axis.playWidget.display = false;
     axis.resetCaseWaving();
     axis.playButton.play = false;
+    popup_displayed = null;
   }
 }
 

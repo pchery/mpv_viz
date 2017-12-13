@@ -14,13 +14,16 @@ class Case{
   String age;
   String gender;
   String state;
+  String weapon;
+  String cause;
+  String agency;
   Popup popup;
   Map<String, String> attrib = new HashMap<String,String>();
   String filterValue;
   int wave_rad;
   float wave_stroke_weight=3;
   boolean wave_on;
-  Case(float lon, float lat, String name, String date, String race, String age, String gender, String state){
+  Case(float lon, float lat, String name, String date, String race, String age, String gender, String state, String weapon, String cause, String agency){
   
     wave_rad = 0;
     wave_on = true;
@@ -34,6 +37,11 @@ class Case{
     attrib.put("State", state);
     attrib.put("Date", date);
     attrib.put("Age", age);
+    attrib.put("Weapon", weapon);
+    attrib.put("Cause", cause);
+    //attrib.put("Agency", agency);
+    this.weapon = weapon;
+    this.cause = cause;
     this.state = state;
     this.name = name;
     this.race = race;
@@ -42,6 +50,7 @@ class Case{
     this.popup = new Popup(this);
     this.latitude = lat;
     this.longitude = lon;
+    this.agency = agency;
     location = new Location(lon, lat);
     pos = map.getScreenPosition(location);
     s_date = date;
@@ -69,6 +78,9 @@ class Case{
             double age = Math.ceil(Integer.valueOf(attrib.get(filterValue).replace("s", ""))/10.0)*10;
             if(age < 90){
               c = unhex(colormap.findRow(String.valueOf((int)age), 1).getString(2));
+            }
+            if(age >= 90){
+               c = unhex(colormap.findRow("90", 1).getString(2));
             }
           }
         }else{

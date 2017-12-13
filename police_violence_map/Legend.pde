@@ -26,7 +26,11 @@ class Legend{
       textSize(9);
       if(name.equals("Age")){
          int age = Integer.valueOf(tr.getString(1));
-         text(age - 10 + " - " + age , width - 7 - (rect_width + x_pad)*i + rect_width/2, 10 + y_pad + rect_height + textAscent() + textDescent());
+         if(age < 90){
+           text(age - 10 + " - " + age , width - 7 - (rect_width + x_pad)*i + rect_width/2, 10 + y_pad + rect_height + textAscent() + textDescent());
+         }if(age >= 90){
+           text("80+", width - 7 - (rect_width + x_pad)*i + rect_width/2, 10 + y_pad + rect_height + textAscent() + textDescent());
+         }
       }else{
         text(tr.getString(1).replaceAll(" ", "\n"), width - 7 - (rect_width + x_pad)*i + rect_width/2, 10 + y_pad + rect_height + textAscent() + textDescent());
       }
