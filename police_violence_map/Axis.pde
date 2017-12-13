@@ -67,7 +67,7 @@ class Axis {
   
   boolean clicked() {
     return ((mouseX>= this.x_pos && mouseX <= this.x_pos+this.len) && 
-            (mouseY >= this.y_pos-3 && mouseY <= this.y_pos+3));
+            (mouseY >= this.y_pos-20 && mouseY <= this.y_pos+20));
   }
   
   void draw() {

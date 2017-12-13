@@ -22,7 +22,6 @@ import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 Axis axis;
-BarScaleUI barscale;
 JSONArray c; 
 FilterButton[] filterButtons;
 import java.util.*;
@@ -60,7 +59,6 @@ void setup(){
   map.setTweening(true);
   loadData();
   attrib_count = new HashMap<String, Integer>();
-  barscale = new BarScaleUI(this, map, 100, 700);
   filterButtons = new FilterButton[3];
   filterButtons[2] = new FilterButton("Age", 25, 10);
   filterButtons[0] = new FilterButton("Race", 100, 10);
@@ -118,7 +116,6 @@ void draw(){
      c.displayed = false; 
    }
   }
-  barscale.draw();
   axis.draw();
   if(axis.playButton.play) {
     axis.playWidget.drag(axis.playWidget.x_pos+axis.day_unit);
@@ -147,7 +144,7 @@ void loadData(){
   cases = new Case[table.getRowCount()];
   for(int i = 0; i < table.getRowCount(); i++){
     TableRow r = table.getRow(i);
-    cases[i] = new Case(r.getFloat("latitude"), r.getFloat("longitude"), r.getString("name"), r.getString("date"), r.getString("race"), r.getString("age"), r.getString("gender"),r.getString("state")); 
+    cases[i] = new Case(r.getFloat("latitude"), r.getFloat("longitude"), r.getString("name"), r.getString("date"), r.getString("race"), r.getString("age"), r.getString("gender"),r.getString("state"), r.getString("alleged_weapon"), r.getString("cause"),r.getString("agency")); 
   }
   
   
