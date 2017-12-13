@@ -192,6 +192,7 @@ void mouseClicked(MouseEvent evt){
     axis.playWidget.display = false;
     axis.playWidget.x_pos = axis.minSliderButton.x_pos;
     axis.playButton.play = false;
+    popup_displayed = null;
     axis.resetCaseWaving();
   }
   

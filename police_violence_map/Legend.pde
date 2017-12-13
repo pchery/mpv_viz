@@ -3,7 +3,7 @@ class Legend{
   int rect_width = 50;
   int rect_height = 25;
   int x_pad = 15;
-  int y_pad = 5;
+  int y_pad = 10;
   String name;
   Table cmap;
 
@@ -23,7 +23,7 @@ class Legend{
       rect(width - 10 - (rect_width + x_pad)*i, 7 + y_pad, rect_width, rect_height);
       fill(0);
       textAlign(CENTER);
-      textSize(9);
+      textSize(10);
       if(name.equals("Age")){
          int age = Integer.valueOf(tr.getString(1));
          if(age < 90){
