@@ -71,7 +71,7 @@ void setup(){
   MouseHandler mouseHandler = new MouseHandler(this, map);
   eventDispatcher.addBroadcaster(mouseHandler);
   eventDispatcher.register(map, PanMapEvent.TYPE_PAN, map.getId());
-  eventDispatcher.unregister(map, ZoomMapEvent.TYPE_ZOOM, map.getId());
+  eventDispatcher.register(map, ZoomMapEvent.TYPE_ZOOM, map.getId());
   //eventDispatcher.unregister(map, PanMapEvent.PAN_BY, map.getId());
  // eventDispatcher.register(map, ZoomMapEvent.TYPE_ZOOM, map.getId());
 }
@@ -208,6 +208,7 @@ void mouseDragged(){
     axis.playWidget.display = false;
     axis.resetCaseWaving();
     axis.playButton.play = false;
+    popup_displayed = null;
   }
 }
 
